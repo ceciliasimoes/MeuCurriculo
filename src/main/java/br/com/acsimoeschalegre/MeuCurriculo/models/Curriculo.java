@@ -3,22 +3,21 @@ package br.com.acsimoeschalegre.MeuCurriculo.models;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "curriculos")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Getter
+@Setter
 public class Curriculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nome;
 
@@ -40,5 +39,9 @@ public class Curriculo {
 
     @OneToMany(mappedBy = "curriculo_id")
     private List<Certificado> certificados;
+
+    public Curriculo(){
+
+    }
 
 }

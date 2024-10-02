@@ -1,23 +1,22 @@
 package br.com.acsimoeschalegre.MeuCurriculo.models;
 
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastroDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Entity
 @Table(name = "formacoes")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Getter
+@Setter
 public class Formacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "curriculo_id", nullable = false)
@@ -27,11 +26,14 @@ public class Formacao {
     private String nomeFormacao;
     private String tipoFormacao;
     private String dataInicio ;
-    private String  dataTermino;
+    private String dataTermino;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M-yyyy");
 
-//    public Formacao(LocalDate dataInicio, LocalDate dataTermino){
-//        this.dataInicio = dataInicio.format(this.dateTimeFormatter);
-//        this.dataTermino = dataTermino.format(this.dateTimeFormatter);
-//    }
+    public Formacao(FormacaoCadastroDTO dto){
+        this.instituicao = dto.instituicao();
+        this.nomeFormacao = dto.nomeFormacao();
+        this.tipoFormacao = dto.tipoFormacao();
+        this.dataInicio = dto.dataInicio().format(this.dateTimeFormatter);
+        this.dataTermino = dto.dataTermino().format(this.dateTimeFormatter);
+    }
 }
