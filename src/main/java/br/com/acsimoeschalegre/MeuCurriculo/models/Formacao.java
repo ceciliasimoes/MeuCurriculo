@@ -1,6 +1,6 @@
 package br.com.acsimoeschalegre.MeuCurriculo.models;
 
-import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastroDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +30,7 @@ public class Formacao {
     private String dataTermino;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M-yyyy");
 
-    public Formacao(FormacaoCadastroDTO dto){
+    public Formacao(FormacaoCadastrarDTO dto){
         this.instituicao = dto.instituicao();
         this.nomeFormacao = dto.nomeFormacao();
         this.tipoFormacao = dto.tipoFormacao();

@@ -1,6 +1,6 @@
 package br.com.acsimoeschalegre.MeuCurriculo.models;
 
-import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoCadastroDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoCadastrarDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Certificado {
     @Size(min = 255, max = 600)
     private String resumoDeAtividades;
 
-    public Certificado(CertificadoCadastroDTO dto){
+    public Certificado(CertificadoCadastrarDTO dto){
         this.nomeCertificado = dto.nomeCertificado();
         this.instituicao = dto.instituicao();
         this.quantidadeHoras = dto.quantidadeHoras();

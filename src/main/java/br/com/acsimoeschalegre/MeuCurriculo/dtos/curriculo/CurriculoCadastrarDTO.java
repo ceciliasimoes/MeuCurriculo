@@ -1,6 +1,6 @@
 package br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo;
 
-import br.com.acsimoeschalegre.MeuCurriculo.dtos.LocalidadeDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.localidade.LocalidadeDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

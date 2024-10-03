@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
-public record FormacaoCadastroDTO(
+public record FormacaoCadastrarDTO(
         @NotBlank String instituicao,
         @NotBlank String nomeFormacao,
         @NotBlank String tipoFormacao,

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record CertificadoCadastroDTO(
+public record CertificadoCadastrarDTO(
         @NotBlank String nomeCertificado,
         @NotBlank String instituicao,
         @NotNull int quantidadeHoras,

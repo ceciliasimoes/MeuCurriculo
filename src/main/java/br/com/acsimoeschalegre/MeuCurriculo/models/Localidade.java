@@ -1,6 +1,6 @@
 package br.com.acsimoeschalegre.MeuCurriculo.models;
 
-import br.com.acsimoeschalegre.MeuCurriculo.dtos.LocalidadeDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.localidade.LocalidadeDTO;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
