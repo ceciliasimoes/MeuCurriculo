@@ -48,7 +48,8 @@ public class FormacaoService  implements IFormacaoService{
 
     @Override
     public void deleteFormacao(Long id){
-        this.formacaoRepository.deleteById(id);
+        var formacao = this.formacaoRepository.findById(id).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
+        this.formacaoRepository.delete(formacao);
     }
 
     public List<FormacaoDTO> getAllFormacoes(){

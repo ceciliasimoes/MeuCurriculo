@@ -10,7 +10,7 @@ public interface ICertificadoService {
 
      CertificadoDTO addCertificado(CertificadoCadastrarDTO dto);
 
-     CertificadoDTO atualizarCertificado(Long id,CertificadoAtualizarDTO dto);
+     CertificadoDTO updateCertificado(Long id,CertificadoAtualizarDTO dto);
 
      void deleteCertificado(Long id);
 

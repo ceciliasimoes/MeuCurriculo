@@ -29,7 +29,7 @@ public class CertificadoService implements ICertificadoService{
     }
 
     @Override
-    public CertificadoDTO atualizarCertificado(Long id,CertificadoAtualizarDTO dto){
+    public CertificadoDTO updateCertificado(Long id,CertificadoAtualizarDTO dto){
         var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
         if( dto.nomeCertificado() != null){
             certificado.setNomeCertificado(dto.nomeCertificado());
@@ -46,7 +46,8 @@ public class CertificadoService implements ICertificadoService{
 
     @Override
     public void deleteCertificado(Long id){
-        this.certificadoRepository.deleteById(id);
+        var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
+        this.certificadoRepository.delete(certificado);
     }
 
     @Override

@@ -10,11 +10,11 @@ import java.util.List;
 public interface IExperienciaService {
      ExperienciaDTO addExperiencia(ExperienciaCadastrarDTO dto);
 
-     ExperienciaDTO atualizarExperiencia(Long id,ExperienciaAtualizarDTO dto);
+     ExperienciaDTO updateExperiencia(Long id,ExperienciaAtualizarDTO dto);
 
      void deleteExperiencia(Long id);
 
-     List<ExperienciaDTO> getAlExperienciasl();
+     List<ExperienciaDTO> getAllExperiencias();
 
      ExperienciaDTO findExperienciaById(Long id);
 

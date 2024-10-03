@@ -32,7 +32,7 @@ public class ExperienciaService implements IExperienciaService {
     }
 
     @Override
-    public ExperienciaDTO atualizarExperiencia(Long id,ExperienciaAtualizarDTO dto){
+    public ExperienciaDTO updateExperiencia(Long id,ExperienciaAtualizarDTO dto){
         var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
         if( dto.cidade() != null){
             experiencia.setCidade(dto.cidade());
@@ -49,10 +49,11 @@ public class ExperienciaService implements IExperienciaService {
 
     @Override
     public void deleteExperiencia(Long id){
-        this.experienciaRepository.deleteById(id);
+        var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
+        this.experienciaRepository.delete(experiencia);
     }
     @Override
-    public List<ExperienciaDTO> getAlExperienciasl(){
+    public List<ExperienciaDTO> getAllExperiencias(){
         List<Experiencia> lista = this.experienciaRepository.findAll();
         return lista.stream().map(ExperienciaDTO::new).collect(Collectors.toList());
     }
