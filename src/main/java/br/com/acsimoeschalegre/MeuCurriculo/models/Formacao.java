@@ -4,6 +4,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastroDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -35,5 +36,13 @@ public class Formacao {
         this.tipoFormacao = dto.tipoFormacao();
         this.dataInicio = dto.dataInicio().format(this.dateTimeFormatter);
         this.dataTermino = dto.dataTermino().format(this.dateTimeFormatter);
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio.format(this.dateTimeFormatter);
+    }
+
+    public void setDataTermino(LocalDate dataTermino) {
+        this.dataTermino = dataTermino.format(this.dateTimeFormatter);
     }
 }

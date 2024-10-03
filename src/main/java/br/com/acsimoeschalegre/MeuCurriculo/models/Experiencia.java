@@ -30,7 +30,7 @@ public class Experiencia {
     @Size(min = 255, max = 600)
     private String resumoDeAtividades;
 
-    public Experiencia(ExperienciaCadastrarDTO dto){
+    public Experiencia(ExperienciaCadastrarDTO dto) {
         this.nomeEmpresa = dto.nomeEmpresa();
         this.cargo = dto.cargo();
         this.dataInicio = dto.dataInicio().format(this.dateTimeFormatter);
@@ -39,4 +39,11 @@ public class Experiencia {
         this.resumoDeAtividades = dto.resumoDeAtividades();
     }
 
+    public void setDataTermino(LocalDate dataTermino) {
+        this.dataTermino = dataTermino.format(this.dateTimeFormatter);
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio.format(this.dateTimeFormatter);
+    }
 }

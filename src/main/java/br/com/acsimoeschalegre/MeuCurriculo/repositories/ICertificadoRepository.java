@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICertificadoRepository extends JpaRepository<Certificado, Long> {
+    Certificado findByQuantidadeHoras(int quantidadeHoras);
 }

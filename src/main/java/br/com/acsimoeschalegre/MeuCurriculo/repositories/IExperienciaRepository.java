@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IExperienciaRepository extends JpaRepository<Experiencia, Long> {
+    Experiencia findByNomeEmpresaContainsIgnoreCase(String nomeEmpresa);
 }

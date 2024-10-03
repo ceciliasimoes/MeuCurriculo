@@ -1,5 +1,6 @@
 package br.com.acsimoeschalegre.MeuCurriculo.models;
 
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoCadastrarDTO;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -40,7 +41,12 @@ public class Curriculo {
     @OneToMany(mappedBy = "curriculo_id")
     private List<Certificado> certificados;
 
-    public Curriculo(){
+    public Curriculo(CurriculoCadastrarDTO dto){
+        this.nome = dto.nome();
+        this.localidade = new Localidade(dto.localidade());
+        this.objetivoProfissional = dto.objetivoProfissional();
+        this.meiosDeContato = dto.meiosDeContato();
+        this.competencias = dto.competencias();
 
     }
 
