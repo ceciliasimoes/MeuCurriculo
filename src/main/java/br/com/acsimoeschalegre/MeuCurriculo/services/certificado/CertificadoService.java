@@ -4,7 +4,6 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoAtualizarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.models.Certificado;
-import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICertificadoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,17 @@ public class CertificadoService implements ICertificadoService{
     @Autowired
     public ICurriculoRepository curriculoRepository;
 
-    public void addCertificado(CertificadoCadastrarDTO dto){
+    @Override
+    public CertificadoDTO addCertificado(CertificadoCadastrarDTO dto){
         var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Certificado certificado = new Certificado(dto, curriculo);
         this.certificadoRepository.save(certificado);
+        return new CertificadoDTO(certificado);
     }
 
-    public void atualizarCertificado(CertificadoAtualizarDTO dto){
-        var certificado = this.certificadoRepository.findById(dto.id()).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
+    @Override
+    public CertificadoDTO atualizarCertificado(Long id,CertificadoAtualizarDTO dto){
+        var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
         if( dto.nomeCertificado() != null){
             certificado.setNomeCertificado(dto.nomeCertificado());
         }
@@ -39,22 +41,27 @@ public class CertificadoService implements ICertificadoService{
             certificado.setQuantidadeHoras(dto.quantidadeHoras());
         }
         this.certificadoRepository.save(certificado);
+        return new CertificadoDTO(certificado);
     }
 
+    @Override
     public void deleteCertificado(Long id){
         this.certificadoRepository.deleteById(id);
     }
 
+    @Override
     public List<CertificadoDTO> getAllCertificados(){
         List<Certificado> lista = this.certificadoRepository.findAll();
         return lista.stream().map(CertificadoDTO::new).collect(Collectors.toList());
     }
 
+    @Override
     public CertificadoDTO findCertificadoById(Long id){
-        Optional<Certificado> certificado = this.certificadoRepository.findById(id);
-        return new CertificadoDTO(certificado.get());
+        var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
+        return new CertificadoDTO(certificado);
     }
 
+    @Override
     public CertificadoDTO findCertificadoByQuantidadeHoras(int quantidadeHoras){
         Certificado certificado = this.certificadoRepository.findByQuantidadeHoras(quantidadeHoras);
         return new CertificadoDTO(certificado);

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ICertificadoService {
 
-     void addCertificado(CertificadoCadastrarDTO dto);
+     CertificadoDTO addCertificado(CertificadoCadastrarDTO dto);
 
-     void atualizarCertificado(CertificadoAtualizarDTO dto);
+     CertificadoDTO atualizarCertificado(Long id,CertificadoAtualizarDTO dto);
 
      void deleteCertificado(Long id);
 

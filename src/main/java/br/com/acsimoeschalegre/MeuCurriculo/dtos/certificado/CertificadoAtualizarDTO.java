@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CertificadoAtualizarDTO(
-        @NotNull Long id,
         String nomeCertificado,
         String instituicao,
         Integer quantidadeHoras,

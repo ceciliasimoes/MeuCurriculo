@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record ExperienciaAtualizarDTO(
-        @NotNull Long id,
         @JsonFormat(pattern = "MM/yyyy") LocalDate dataInicio,
         @JsonFormat(pattern = "MM/yyyy") LocalDate dataTermino,
         String cidade,

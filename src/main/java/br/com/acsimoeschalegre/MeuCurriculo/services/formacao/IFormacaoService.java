@@ -7,9 +7,9 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoDTO;
 import java.util.List;
 
 public interface IFormacaoService {
-     void addFormacao(FormacaoCadastrarDTO dto);
+     FormacaoDTO addFormacao(FormacaoCadastrarDTO dto);
 
-     void atualizarFormacao(FormacaoAtulizarDTO dto);
+     FormacaoDTO atualizarFormacao(Long id,FormacaoAtulizarDTO dto);
 
      void deleteFormacao(Long id);
 

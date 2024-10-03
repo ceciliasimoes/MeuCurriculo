@@ -22,14 +22,17 @@ public class FormacaoService  implements IFormacaoService{
     @Autowired
     public ICurriculoRepository curriculoRepository;
 
-    public void addFormacao(FormacaoCadastrarDTO dto){
+    @Override
+    public FormacaoDTO addFormacao(FormacaoCadastrarDTO dto){
         var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Formacao formacao = new Formacao(dto, curriculo);
         this.formacaoRepository.save(formacao);
+        return new FormacaoDTO(formacao);
     }
 
-    public void atualizarFormacao(FormacaoAtulizarDTO dto){
-        var formacao = this.formacaoRepository.findById(dto.id()).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
+    @Override
+    public FormacaoDTO atualizarFormacao(Long id,FormacaoAtulizarDTO dto){
+        var formacao = this.formacaoRepository.findById(id).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
         if (dto.tipoFormacao() != null){
             formacao.setTipoFormacao(dto.tipoFormacao());
         }
@@ -40,8 +43,10 @@ public class FormacaoService  implements IFormacaoService{
             formacao.setDataTermino(dto.dataTermino());
         }
         this.formacaoRepository.save(formacao);
+        return new FormacaoDTO(formacao);
     }
 
+    @Override
     public void deleteFormacao(Long id){
         this.formacaoRepository.deleteById(id);
     }
@@ -51,11 +56,13 @@ public class FormacaoService  implements IFormacaoService{
         return lista.stream().map(FormacaoDTO::new).collect(Collectors.toList());
     }
 
+    @Override
     public FormacaoDTO findFormacaoById(Long id){
-        Optional<Formacao> formacao = this.formacaoRepository.findById(id);
-        return new FormacaoDTO(formacao.get());
+        var formacao = this.formacaoRepository.findById(id).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
+        return new FormacaoDTO(formacao);
     }
 
+    @Override
     public FormacaoDTO findFormacaoByName(String nomeFormacao){
         Formacao formacao = this.formacaoRepository.findByNomeFormacaoContainsIgnoreCase(nomeFormacao);
         return new FormacaoDTO(formacao);

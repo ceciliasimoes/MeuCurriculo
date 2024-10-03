@@ -23,14 +23,17 @@ public class ExperienciaService implements IExperienciaService {
     @Autowired
     public ICurriculoRepository curriculoRepository;
 
-    public void addExperiencia(ExperienciaCadastrarDTO dto){
+    @Override
+    public ExperienciaDTO addExperiencia(ExperienciaCadastrarDTO dto){
         var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Experiencia experiencia = new Experiencia(dto, curriculo);
         this.experienciaRepository.save(experiencia);
+        return  new ExperienciaDTO(experiencia);
     }
 
-    public void atualizarExperiencia(ExperienciaAtualizarDTO dto){
-        var experiencia = this.experienciaRepository.findById(dto.id()).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
+    @Override
+    public ExperienciaDTO atualizarExperiencia(Long id,ExperienciaAtualizarDTO dto){
+        var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
         if( dto.cidade() != null){
             experiencia.setCidade(dto.cidade());
         }
@@ -41,22 +44,24 @@ public class ExperienciaService implements IExperienciaService {
             experiencia.setDataTermino(dto.dataTermino());
         }
         this.experienciaRepository.save(experiencia);
+        return new ExperienciaDTO(experiencia);
     }
 
+    @Override
     public void deleteExperiencia(Long id){
         this.experienciaRepository.deleteById(id);
     }
-
+    @Override
     public List<ExperienciaDTO> getAlExperienciasl(){
         List<Experiencia> lista = this.experienciaRepository.findAll();
         return lista.stream().map(ExperienciaDTO::new).collect(Collectors.toList());
     }
-
+    @Override
     public ExperienciaDTO findExperienciaById(Long id){
-        Optional<Experiencia> experiencia = this.experienciaRepository.findById(id);
-        return new ExperienciaDTO(experiencia.get());
+       var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
+        return new ExperienciaDTO(experiencia);
     }
-
+    @Override
     public ExperienciaDTO findExperienciaByNomeEmpresa(String nomeEmpresa){
         Experiencia experiencia = this.experienciaRepository.findByNomeEmpresaContainsIgnoreCase(nomeEmpresa);
         return new ExperienciaDTO(experiencia);
