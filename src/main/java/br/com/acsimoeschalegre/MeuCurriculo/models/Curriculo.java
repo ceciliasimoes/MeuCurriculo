@@ -30,15 +30,15 @@ public class Curriculo {
 
     private List<String> meiosDeContato;
 
-    @OneToMany(mappedBy = "curriculo_id")
+    @OneToMany(mappedBy = "curriculo")
     private List<Formacao> formacaoAcademica;
 
-    @OneToMany(mappedBy = "curriculo_id")
+    @OneToMany(mappedBy = "curriculo")
     private List<Experiencia> experienciaProfissional;
 
     private List<String> competencias;
 
-    @OneToMany(mappedBy = "curriculo_id")
+    @OneToMany(mappedBy = "curriculo")
     private List<Certificado> certificados;
 
     public Curriculo(CurriculoCadastrarDTO dto){

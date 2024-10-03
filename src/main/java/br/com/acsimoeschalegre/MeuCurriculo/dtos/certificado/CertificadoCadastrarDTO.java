@@ -8,6 +8,7 @@ public record CertificadoCadastrarDTO(
         @NotBlank String nomeCertificado,
         @NotBlank String instituicao,
         @NotNull int quantidadeHoras,
-        @Size(min = 255, max = 600) String resumoDeAtividades
+        @Size(min = 255, max = 600) String resumoDeAtividades,
+        @NotNull Long curriculoId
 ) {
 }

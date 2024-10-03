@@ -20,30 +20,27 @@ public class Experiencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "curriculo_id")
+    private Curriculo curriculo;
+
     private String nomeEmpresa;
     private String cargo;
-    private String dataInicio;
-    private String dataTermino;
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M-yyyy");
+    private LocalDate dataInicio;
+    private LocalDate dataTermino;
     private String cidade;
 
     @Size(min = 255, max = 600)
     private String resumoDeAtividades;
 
-    public Experiencia(ExperienciaCadastrarDTO dto) {
+    public Experiencia(ExperienciaCadastrarDTO dto, Curriculo curriculo) {
         this.nomeEmpresa = dto.nomeEmpresa();
         this.cargo = dto.cargo();
-        this.dataInicio = dto.dataInicio().format(this.dateTimeFormatter);
-        this.dataTermino = dto.dataTermino().format(this.dateTimeFormatter);
+        this.dataInicio = dto.dataInicio();
+        this.dataTermino = dto.dataTermino();
         this.cidade = dto.cidade();
         this.resumoDeAtividades = dto.resumoDeAtividades();
+        this.curriculo = curriculo;
     }
 
-    public void setDataTermino(LocalDate dataTermino) {
-        this.dataTermino = dataTermino.format(this.dateTimeFormatter);
-    }
-
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio.format(this.dateTimeFormatter);
-    }
 }

@@ -17,16 +17,21 @@ public class Certificado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "curriculo_id")
+    private Curriculo curriculo;
+
     private String nomeCertificado;
     private String instituicao;
     private int quantidadeHoras;
     @Size(min = 255, max = 600)
     private String resumoDeAtividades;
 
-    public Certificado(CertificadoCadastrarDTO dto){
+    public Certificado(CertificadoCadastrarDTO dto, Curriculo curriculo){
         this.nomeCertificado = dto.nomeCertificado();
         this.instituicao = dto.instituicao();
         this.quantidadeHoras = dto.quantidadeHoras();
         this.resumoDeAtividades = dto.resumoDeAtividades();
+        this.curriculo = curriculo;
     }
 }

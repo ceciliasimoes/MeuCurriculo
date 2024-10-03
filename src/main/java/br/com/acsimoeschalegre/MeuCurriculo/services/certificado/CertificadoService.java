@@ -4,7 +4,9 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoAtualizarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.certificado.CertificadoCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.models.Certificado;
+import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICertificadoRepository;
+import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -16,8 +18,12 @@ public class CertificadoService implements ICertificadoService{
     @Autowired
     public ICertificadoRepository certificadoRepository;
 
+    @Autowired
+    public ICurriculoRepository curriculoRepository;
+
     public void addCertificado(CertificadoCadastrarDTO dto){
-        Certificado certificado = new Certificado(dto);
+        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+        Certificado certificado = new Certificado(dto, curriculo);
         this.certificadoRepository.save(certificado);
     }
 

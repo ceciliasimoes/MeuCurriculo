@@ -3,7 +3,9 @@ package br.com.acsimoeschalegre.MeuCurriculo.services.formacao;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoAtulizarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
 import br.com.acsimoeschalegre.MeuCurriculo.models.Formacao;
+import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IFormacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,12 @@ public class FormacaoService  implements IFormacaoService{
     @Autowired
     public IFormacaoRepository formacaoRepository;
 
+    @Autowired
+    public ICurriculoRepository curriculoRepository;
+
     public void addFormacao(FormacaoCadastrarDTO dto){
-        Formacao formacao = new Formacao(dto);
+        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+        Formacao formacao = new Formacao(dto, curriculo);
         this.formacaoRepository.save(formacao);
     }
 
@@ -51,7 +57,7 @@ public class FormacaoService  implements IFormacaoService{
     }
 
     public FormacaoDTO findFormacaoByName(String nomeFormacao){
-        Formacao formacao = this.formacaoRepository.findByNomeContainsIgnoreCase(nomeFormacao);
+        Formacao formacao = this.formacaoRepository.findByNomeFormacaoContainsIgnoreCase(nomeFormacao);
         return new FormacaoDTO(formacao);
     }
 }

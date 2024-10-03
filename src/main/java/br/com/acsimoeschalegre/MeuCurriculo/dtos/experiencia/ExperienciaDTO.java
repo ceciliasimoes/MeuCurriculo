@@ -8,8 +8,8 @@ public record ExperienciaDTO (
         Long id,
         String nomeEmpresa,
         String cargo,
-        String  dataInicio,
-        String dataTermino,
+        LocalDate  dataInicio,
+        LocalDate dataTermino,
         String cidade,
         String resumoDeAtividades
 ) {

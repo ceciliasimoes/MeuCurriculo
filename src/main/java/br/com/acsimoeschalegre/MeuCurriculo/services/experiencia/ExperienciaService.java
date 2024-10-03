@@ -3,7 +3,9 @@ package br.com.acsimoeschalegre.MeuCurriculo.services.experiencia;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaAtualizarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
 import br.com.acsimoeschalegre.MeuCurriculo.models.Experiencia;
+import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IExperienciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,12 @@ public class ExperienciaService implements IExperienciaService {
     @Autowired
     public IExperienciaRepository experienciaRepository;
 
+    @Autowired
+    public ICurriculoRepository curriculoRepository;
+
     public void addExperiencia(ExperienciaCadastrarDTO dto){
-        Experiencia experiencia = new Experiencia(dto);
+        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+        Experiencia experiencia = new Experiencia(dto, curriculo);
         this.experienciaRepository.save(experiencia);
     }
 

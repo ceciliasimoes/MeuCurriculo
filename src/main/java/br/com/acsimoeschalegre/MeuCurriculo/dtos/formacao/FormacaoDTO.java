@@ -10,8 +10,8 @@ public record FormacaoDTO(
          String instituicao,
          String nomeFormacao,
          String tipoFormacao,
-         String dataInicio ,
-         String dataTermino
+         LocalDate dataInicio ,
+         LocalDate dataTermino
 ) {
 
     public FormacaoDTO(Formacao formacao) {

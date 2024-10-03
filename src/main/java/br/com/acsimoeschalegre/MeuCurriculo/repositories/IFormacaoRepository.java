@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IFormacaoRepository extends JpaRepository<Formacao, Long> {
-    Formacao findByNomeContainsIgnoreCase(String nomeFormacao);
+    Formacao findByNomeFormacaoContainsIgnoreCase(String nomeFormacao);
 }

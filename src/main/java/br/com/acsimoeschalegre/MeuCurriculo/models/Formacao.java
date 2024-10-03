@@ -20,29 +20,21 @@ public class Formacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "curriculo_id", nullable = false)
+    @JoinColumn(name = "curriculo_id")
     private Curriculo curriculo;
 
     private String instituicao;
     private String nomeFormacao;
     private String tipoFormacao;
-    private String dataInicio ;
-    private String dataTermino;
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M-yyyy");
+    private LocalDate dataInicio ;
+    private LocalDate dataTermino;
 
-    public Formacao(FormacaoCadastrarDTO dto){
+    public Formacao(FormacaoCadastrarDTO dto, Curriculo curriculo){
         this.instituicao = dto.instituicao();
         this.nomeFormacao = dto.nomeFormacao();
         this.tipoFormacao = dto.tipoFormacao();
-        this.dataInicio = dto.dataInicio().format(this.dateTimeFormatter);
-        this.dataTermino = dto.dataTermino().format(this.dateTimeFormatter);
-    }
-
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio.format(this.dateTimeFormatter);
-    }
-
-    public void setDataTermino(LocalDate dataTermino) {
-        this.dataTermino = dataTermino.format(this.dateTimeFormatter);
+        this.dataInicio = dto.dataInicio();
+        this.dataTermino = dto.dataTermino();
+        this.curriculo = curriculo;
     }
 }
