@@ -161,7 +161,7 @@ public class CurriculoService implements ICurriculoService{
     @Override
     public List<CurriculoDTO> findByCompetencia(String competencia) {
         List<Curriculo> curriculos = this.curriculoRepository.findByCompetencia(competencia);
-        return List.of();
+        return curriculos.stream().map(CurriculoDTO::new).collect(Collectors.toList());
     }
 
     @Override
