@@ -7,4 +7,5 @@ public record LocalidadeDTO(
      @NotBlank String estado,
      @NotBlank String bairro
 ) {
+
 }

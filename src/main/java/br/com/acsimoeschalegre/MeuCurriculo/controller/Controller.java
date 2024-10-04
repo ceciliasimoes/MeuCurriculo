@@ -11,6 +11,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoAtulizarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.localidade.LocalidadeDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.models.*;
 import br.com.acsimoeschalegre.MeuCurriculo.services.certificado.ICertificadoService;
 import br.com.acsimoeschalegre.MeuCurriculo.services.curriculo.ICurriculoService;
@@ -223,6 +224,12 @@ public class Controller {
     @PatchMapping("/meio-contato/{curriculoId}")
     public ResponseEntity<CurriculoDTO> updateMeiosDeContato(@PathVariable Long curriculoId, @RequestBody List<String> novosContatos) {
         var curriculo = this.curriculoService.updateMeiosDeContato(curriculoId,novosContatos);
+        return ResponseEntity.ok(curriculo);
+    }
+
+    @PatchMapping("/localidade/{curriculoId}")
+    public ResponseEntity<CurriculoDTO> updateLocalidade(@PathVariable Long curriculoId, @RequestBody LocalidadeDTO localidadeDTO) {
+        var curriculo = this.curriculoService.updateLocalidade(curriculoId,localidadeDTO);
         return ResponseEntity.ok(curriculo);
     }
 

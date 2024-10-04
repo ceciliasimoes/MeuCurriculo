@@ -5,6 +5,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
 
+import java.util.Collections;
 import java.util.List;
 
 public record CurriculoDTO(
@@ -21,12 +22,13 @@ public record CurriculoDTO(
     public CurriculoDTO(Curriculo curriculo) {
         this(curriculo.getId(),
                 curriculo.getNome(),
-                curriculo.getLocalidade().toString(),
+                curriculo.getLocalidade() != null ? curriculo.getLocalidade().toString() : null,  // Verificação de null para Localidade
                 curriculo.getObjetivoProfissional(),
                 curriculo.getMeiosDeContato(),
                 curriculo.getCompetencias(),
-                curriculo.getFormacaoAcademica().stream().map(FormacaoDTO::new).toList(),
-                curriculo.getExperienciaProfissional().stream().map(ExperienciaDTO::new).toList(),
-                curriculo.getCertificados().stream().map(CertificadoDTO::new).toList());
+                curriculo.getFormacaoAcademica() != null ? curriculo.getFormacaoAcademica().stream().map(FormacaoDTO::new).toList() : Collections.emptyList(),
+                curriculo.getExperienciaProfissional() != null ? curriculo.getExperienciaProfissional().stream().map(ExperienciaDTO::new).toList() : Collections.emptyList(),
+                curriculo.getCertificados() != null ? curriculo.getCertificados().stream().map(CertificadoDTO::new).toList() : Collections.emptyList());
     }
+
 }

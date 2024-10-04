@@ -4,8 +4,6 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "formacoes")
@@ -26,8 +24,8 @@ public class Formacao {
     private String instituicao;
     private String nomeFormacao;
     private String tipoFormacao;
-    private LocalDate dataInicio ;
-    private LocalDate dataTermino;
+    private String dataInicio ;
+    private String dataTermino;
 
     public Formacao(FormacaoCadastrarDTO dto, Curriculo curriculo){
         this.instituicao = dto.instituicao();

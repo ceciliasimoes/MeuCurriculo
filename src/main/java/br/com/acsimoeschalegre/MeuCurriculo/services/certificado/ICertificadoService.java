@@ -19,6 +19,7 @@ public interface ICertificadoService {
      CertificadoDTO findCertificadoById(Long id);
 
      CertificadoDTO findCertificadoByQuantidadeHoras(int quantidadeHoras);
+
 }
 
 

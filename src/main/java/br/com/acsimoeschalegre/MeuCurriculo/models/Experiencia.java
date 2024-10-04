@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "experiencias")
@@ -26,8 +24,8 @@ public class Experiencia {
 
     private String nomeEmpresa;
     private String cargo;
-    private LocalDate dataInicio;
-    private LocalDate dataTermino;
+    private String dataInicio;
+    private String dataTermino;
     private String cidade;
 
     @Size(min = 255, max = 600)

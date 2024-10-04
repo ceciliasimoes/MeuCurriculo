@@ -5,6 +5,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoCadastrarDTO
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.localidade.LocalidadeDTO;
 
 import java.util.List;
 
@@ -38,5 +39,7 @@ public interface ICurriculoService {
     List<CurriculoDTO> findByCompetencia(String competencia);
 
     CurriculoDTO updateMeiosDeContato(Long curriculoId, List<String> novosContatos);
+
+    CurriculoDTO updateLocalidade(Long curriculoId, LocalidadeDTO localidadeDTO);
 
 }

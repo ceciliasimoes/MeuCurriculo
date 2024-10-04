@@ -5,6 +5,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoCadastrarDTO
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
+import br.com.acsimoeschalegre.MeuCurriculo.dtos.localidade.LocalidadeDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.models.*;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICertificadoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
@@ -75,6 +76,14 @@ public class CurriculoService implements ICurriculoService{
     @Transactional
     public void deleteCurriculo(Long id) {
         var curriculo = this.curriculoRepository.findById(id).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
+        var certificados = this.certificadoRepository.findByCurriculoId(id);
+        var formacoes = this.formacaoRepository.findByCurriculoId(id);
+        var experiencias = this.experienciaRepository.findByCurriculoId(id);
+
+        this.certificadoRepository.deleteAllInBatch(certificados);
+        this.formacaoRepository.deleteAllInBatch(formacoes);
+        this.experienciaRepository.deleteAllInBatch(experiencias);
+
         this.curriculoRepository.delete(curriculo);
     }
 
@@ -169,6 +178,14 @@ public class CurriculoService implements ICurriculoService{
     public CurriculoDTO updateMeiosDeContato(Long curriculoId, List<String> novosContatos) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         curriculo.setMeiosDeContato(novosContatos);
+        this.curriculoRepository.save(curriculo);
+        return new CurriculoDTO(curriculo);
+    }
+
+    @Override
+    public CurriculoDTO updateLocalidade(Long curriculoId, LocalidadeDTO localidadeDTO) {
+        var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
+        curriculo.setLocalidade(new Localidade(localidadeDTO));
         this.curriculoRepository.save(curriculo);
         return new CurriculoDTO(curriculo);
     }
