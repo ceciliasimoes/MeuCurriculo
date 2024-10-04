@@ -9,6 +9,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IFormacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,14 +24,16 @@ public class FormacaoService  implements IFormacaoService{
     public ICurriculoRepository curriculoRepository;
 
     @Override
-    public FormacaoDTO addFormacao(FormacaoCadastrarDTO dto){
-        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+    @Transactional
+    public FormacaoDTO addFormacao(Long curriculoId,FormacaoCadastrarDTO dto){
+        var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Formacao formacao = new Formacao(dto, curriculo);
         this.formacaoRepository.save(formacao);
         return new FormacaoDTO(formacao);
     }
 
     @Override
+    @Transactional
     public FormacaoDTO atualizarFormacao(Long id,FormacaoAtulizarDTO dto){
         var formacao = this.formacaoRepository.findById(id).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
         if (dto.tipoFormacao() != null){
@@ -47,6 +50,7 @@ public class FormacaoService  implements IFormacaoService{
     }
 
     @Override
+    @Transactional
     public void deleteFormacao(Long id){
         var formacao = this.formacaoRepository.findById(id).orElseThrow(()-> new NullPointerException("Formação não encontrada!"));
         this.formacaoRepository.delete(formacao);

@@ -7,11 +7,14 @@ import br.com.acsimoeschalegre.MeuCurriculo.models.Certificado;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICertificadoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CertificadoService implements ICertificadoService{
 
     @Autowired
@@ -21,14 +24,16 @@ public class CertificadoService implements ICertificadoService{
     public ICurriculoRepository curriculoRepository;
 
     @Override
-    public CertificadoDTO addCertificado(CertificadoCadastrarDTO dto){
-        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+    @Transactional
+    public CertificadoDTO addCertificado(Long curriculoId, CertificadoCadastrarDTO dto){
+        var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Certificado certificado = new Certificado(dto, curriculo);
         this.certificadoRepository.save(certificado);
         return new CertificadoDTO(certificado);
     }
 
     @Override
+    @Transactional
     public CertificadoDTO updateCertificado(Long id,CertificadoAtualizarDTO dto){
         var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
         if( dto.nomeCertificado() != null){
@@ -45,6 +50,7 @@ public class CertificadoService implements ICertificadoService{
     }
 
     @Override
+    @Transactional
     public void deleteCertificado(Long id){
         var certificado = this.certificadoRepository.findById(id).orElseThrow(()-> new NullPointerException("Certificado não encontrada!"));
         this.certificadoRepository.delete(certificado);

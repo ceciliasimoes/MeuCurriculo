@@ -5,16 +5,14 @@ import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoCadastrarDTO
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.curriculo.CurriculoDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.experiencia.ExperienciaCadastrarDTO;
 import br.com.acsimoeschalegre.MeuCurriculo.dtos.formacao.FormacaoCadastrarDTO;
-import br.com.acsimoeschalegre.MeuCurriculo.models.Curriculo;
-import br.com.acsimoeschalegre.MeuCurriculo.models.Experiencia;
-import br.com.acsimoeschalegre.MeuCurriculo.models.Formacao;
-import br.com.acsimoeschalegre.MeuCurriculo.models.Localidade;
+import br.com.acsimoeschalegre.MeuCurriculo.models.*;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICertificadoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IExperienciaRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IFormacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +33,7 @@ public class CurriculoService implements ICurriculoService{
     private IFormacaoRepository formacaoRepository;
 
     @Override
+    @Transactional
     public CurriculoDTO addCurriculo(CurriculoCadastrarDTO dto){
         Curriculo curriculo = new Curriculo(dto);
         this.curriculoRepository.save(curriculo);
@@ -48,6 +47,12 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    public List<CurriculoDTO> getAllCurriculos(){
+        return this.curriculoRepository.findAll().stream().map(CurriculoDTO::new).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
     public CurriculoDTO updateCurriculo(Long id, CurriculoCadastrarDTO dto) {
         var curriculo = this.curriculoRepository.findById(id).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         if (dto.localidade() != null){
@@ -67,17 +72,14 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public void deleteCurriculo(Long id) {
         var curriculo = this.curriculoRepository.findById(id).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         this.curriculoRepository.delete(curriculo);
     }
 
     @Override
-    public List<CurriculoDTO> findAllCurriculos() {
-        return this.curriculoRepository.findAll().stream().map(CurriculoDTO::new).collect(Collectors.toList());
-    }
-
-    @Override
+    @Transactional
     public CurriculoDTO addFormacao(Long curriculoId, FormacaoCadastrarDTO formacaoDTO) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         curriculo.getFormacaoAcademica().add(new Formacao(formacaoDTO,curriculo));
@@ -86,6 +88,7 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public CurriculoDTO deleteFormacao(Long curriculoId, Long formacaoId) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         var formacao = this.formacaoRepository.findById(formacaoId).orElseThrow(()-> new NullPointerException("Formação não encontrado!"));
@@ -102,6 +105,7 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public CurriculoDTO addExperiencia(Long curriculoId, ExperienciaCadastrarDTO experienciaDTO) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         curriculo.getExperienciaProfissional().add(new Experiencia(experienciaDTO, curriculo));
@@ -110,6 +114,7 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public CurriculoDTO deleteExperiencia(Long curriculoId, Long experienciaId) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         var experiencia = this.experienciaRepository.findById(experienciaId).orElseThrow(()-> new NullPointerException("Experiência não encontrado!"));
@@ -125,11 +130,16 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public CurriculoDTO addCertificado(Long curriculoId, CertificadoCadastrarDTO certificadoDTO) {
-        return null;
+        var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
+        curriculo.getCertificados().add(new Certificado(certificadoDTO, curriculo));
+        this.curriculoRepository.save(curriculo);
+        return new CurriculoDTO(curriculo);
     }
 
     @Override
+    @Transactional
     public CurriculoDTO deleteCertificado(Long curriculoId, Long certificadoId) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         var certificado = this.certificadoRepository.findById(certificadoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
@@ -144,7 +154,7 @@ public class CurriculoService implements ICurriculoService{
 
     @Override
     public List<CurriculoDTO> findByNome(String nome) {
-        List<Curriculo> curriculos = this.curriculoRepository.findByNameContainsIgnoreCase(nome);
+        List<Curriculo> curriculos = this.curriculoRepository.findByNomeContainsIgnoreCase(nome);
         return curriculos.stream().map(CurriculoDTO::new).collect(Collectors.toList());
     }
 
@@ -155,6 +165,7 @@ public class CurriculoService implements ICurriculoService{
     }
 
     @Override
+    @Transactional
     public CurriculoDTO updateMeiosDeContato(Long curriculoId, List<String> novosContatos) {
         var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Curriculo não encontrado!"));
         curriculo.setMeiosDeContato(novosContatos);

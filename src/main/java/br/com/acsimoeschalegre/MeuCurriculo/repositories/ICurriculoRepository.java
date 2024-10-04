@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface ICurriculoRepository extends JpaRepository<Curriculo, Long> {
-    List<Curriculo> findByNameContainsIgnoreCase(String nome);
+    List<Curriculo> findByNomeContainsIgnoreCase(String nome);
 
-    @Query("SELECT c FROM Curriculo c JOIN c.competencias comp WHERE UPPER(comp.nome) = UPPER(:competencia)")
+    @Query(value = "SELECT * FROM curriculos c WHERE :competencia = ANY(c.competencias)", nativeQuery = true)
     List<Curriculo> findByCompetencia(@Param("competencia") String competencia);
 }

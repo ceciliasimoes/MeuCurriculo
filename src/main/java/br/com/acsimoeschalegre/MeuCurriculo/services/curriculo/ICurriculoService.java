@@ -13,13 +13,13 @@ public interface ICurriculoService {
 
     CurriculoDTO findById(Long id);
 
+    List<CurriculoDTO> getAllCurriculos();
+
     CurriculoDTO updateCurriculo(Long id, CurriculoCadastrarDTO dto);
 
     void deleteCurriculo(Long id);
 
-    List<CurriculoDTO> findAllCurriculos();
 
-    // Métodos específicos
     CurriculoDTO addFormacao(Long curriculoId, FormacaoCadastrarDTO formacaoDTO);
 
     CurriculoDTO deleteFormacao(Long curriculoId, Long formacaoId);
@@ -32,12 +32,11 @@ public interface ICurriculoService {
 
     CurriculoDTO deleteCertificado(Long curriculoId, Long certificadoId);
 
-    // Métodos de busca
+
     List<CurriculoDTO> findByNome(String nome);
 
     List<CurriculoDTO> findByCompetencia(String competencia);
 
-    // Atualização de dados específicos
     CurriculoDTO updateMeiosDeContato(Long curriculoId, List<String> novosContatos);
 
 }

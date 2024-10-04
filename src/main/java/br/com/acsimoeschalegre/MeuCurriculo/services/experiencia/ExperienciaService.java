@@ -9,6 +9,7 @@ import br.com.acsimoeschalegre.MeuCurriculo.repositories.ICurriculoRepository;
 import br.com.acsimoeschalegre.MeuCurriculo.repositories.IExperienciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +25,16 @@ public class ExperienciaService implements IExperienciaService {
     public ICurriculoRepository curriculoRepository;
 
     @Override
-    public ExperienciaDTO addExperiencia(ExperienciaCadastrarDTO dto){
-        var curriculo = this.curriculoRepository.findById(dto.curriculoId()).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
+    @Transactional
+    public ExperienciaDTO addExperiencia(Long curriculoId,ExperienciaCadastrarDTO dto){
+        var curriculo = this.curriculoRepository.findById(curriculoId).orElseThrow(()-> new NullPointerException("Currículo não encontrado!"));
         Experiencia experiencia = new Experiencia(dto, curriculo);
         this.experienciaRepository.save(experiencia);
         return  new ExperienciaDTO(experiencia);
     }
 
     @Override
+    @Transactional
     public ExperienciaDTO updateExperiencia(Long id,ExperienciaAtualizarDTO dto){
         var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
         if( dto.cidade() != null){
@@ -47,7 +50,9 @@ public class ExperienciaService implements IExperienciaService {
         return new ExperienciaDTO(experiencia);
     }
 
+
     @Override
+    @Transactional
     public void deleteExperiencia(Long id){
         var experiencia = this.experienciaRepository.findById(id).orElseThrow(()-> new NullPointerException("Experiência não encontrada!"));
         this.experienciaRepository.delete(experiencia);

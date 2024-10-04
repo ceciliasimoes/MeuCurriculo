@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface IExperienciaService {
-     ExperienciaDTO addExperiencia(ExperienciaCadastrarDTO dto);
+     ExperienciaDTO addExperiencia(Long curriculoId,ExperienciaCadastrarDTO dto);
 
      ExperienciaDTO updateExperiencia(Long id,ExperienciaAtualizarDTO dto);
 

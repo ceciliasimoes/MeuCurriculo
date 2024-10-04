@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICertificadoService {
 
-     CertificadoDTO addCertificado(CertificadoCadastrarDTO dto);
+     CertificadoDTO addCertificado(Long curriculoId,CertificadoCadastrarDTO dto);
 
      CertificadoDTO updateCertificado(Long id,CertificadoAtualizarDTO dto);
 
